@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:only_good_news/core/constants/palette.dart';
 
 import 'features/show_news/presentation/pages/home_page.dart';
 
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            const ColorScheme.light().copyWith(secondary: Palette.deepBlue),
+
         useMaterial3: true,
       ),
       home: const HomePage(),

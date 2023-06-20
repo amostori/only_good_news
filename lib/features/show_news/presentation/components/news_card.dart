@@ -6,7 +6,8 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
       height: 300,
       width: MediaQuery.of(context).size.width - (2 * 16),
       child: Stack(
@@ -15,9 +16,7 @@ class NewsCard extends StatelessWidget {
             height: 260,
             color: Palette.lightGrey,
             child: Image.network(
-              'https://www.applesfromny'
-              '.com/wp-content/uploads/2020/05/20Ounce_NYAS-Apples2'
-              '.png',
+              'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg',
               fit: BoxFit.cover,
             ),
           ),

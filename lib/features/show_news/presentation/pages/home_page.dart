@@ -19,13 +19,13 @@ class HomePage extends StatelessWidget {
               color: Palette.deepBlue),
         ),
       ),
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
+            const TextField(
               cursorColor: Palette.deepBlue,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -35,8 +35,8 @@ class HomePage extends StatelessWidget {
                       borderSide:
                           BorderSide(width: 2, color: Palette.deepBlue))),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Top News',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -44,8 +44,19 @@ class HomePage extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(height: 16),
-            NewsCard(),
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return const NewsCard();
+                },
+              ),
+            ),
+            //Expanded
+            // zajmuje całą
+            // dostępną
+            // przestrzeń
           ],
         ),
       ),
