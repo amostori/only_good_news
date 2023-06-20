@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:only_good_news/core/constants/palette.dart';
+import 'package:only_good_news/features/show_news/presentation/components/news_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -43,6 +44,8 @@ class HomePage extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
+            SizedBox(height: 16),
+            NewsCard(),
           ],
         ),
       ),
