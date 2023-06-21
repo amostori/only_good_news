@@ -26,8 +26,22 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TextField(
+              style: TextStyle(
+                fontSize: 14,
+                color: Palette.deepBlue,
+              ),
               cursorColor: Palette.deepBlue,
               decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Palette.lightGrey,
+                    size: 20,
+                  ),
+                  hintText: 'Search',
+                  hintStyle: TextStyle(
+                    fontSize: 14,
+                    color: Palette.lightGrey,
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(width: 1, color: Palette.lightGrey),
                   ),
