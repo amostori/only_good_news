@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:only_good_news/core/constants/palette.dart';
-import 'package:only_good_news/features/show_news/presentation/pages/news_view_page.dart';
-
+import 'package:only_good_news/services_locator.dart';
 import 'features/show_news/presentation/pages/home_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setUpServices();
   runApp(const MyApp());
 }
 
