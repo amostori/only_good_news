@@ -5,10 +5,13 @@ import 'package:only_good_news/features/show_news/data/datasources/fetch_from_re
 import 'package:only_good_news/features/show_news/domain/entities/news_info.dart';
 import 'package:only_good_news/features/show_news/domain/repositories/fetch_repo_contract.dart';
 
-class FetchRepoImpl implements FetchRepo {
-  final FetchFromRemoteDatasource fetchFromRemoteDatasource;
+import '../../../../services_locator.dart';
 
-  FetchRepoImpl({required this.fetchFromRemoteDatasource});
+class FetchRepoImpl implements FetchRepo {
+  final FetchFromRemoteDatasource fetchFromRemoteDatasource =
+      sl<FetchFromRemoteDatasource>();
+
+  FetchRepoImpl();
 
   @override
   Future<Either<Failure, List<NewsInfo>>> fetchNews(String? searchText) async {

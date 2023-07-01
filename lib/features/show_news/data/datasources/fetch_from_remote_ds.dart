@@ -4,14 +4,16 @@ import 'package:only_good_news/core/services/api_service.dart';
 import 'package:only_good_news/features/show_news/data/models/info_%20news_model.dart';
 import 'package:only_good_news/features/show_news/domain/entities/news_info.dart';
 
+import '../../../../services_locator.dart';
+
 abstract class FetchFromRemoteDatasource {
   Future<List<NewsInfoModel>> fetchNews(String? searchText);
 }
 
 class FetchFromRemoteDSImpl implements FetchFromRemoteDatasource {
-  ApiService apiService;
+  ApiService apiService = sl<ApiService>();
 
-  FetchFromRemoteDSImpl({required this.apiService});
+  FetchFromRemoteDSImpl();
 
   @override
   Future<List<NewsInfoModel>> fetchNews(String? searchText) async {
