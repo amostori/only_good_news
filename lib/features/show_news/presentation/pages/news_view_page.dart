@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:only_good_news/core/constants/palette.dart';
+import 'package:only_good_news/features/show_news/domain/entities/news_info.dart';
 
 class NewsViewPage extends StatelessWidget {
-  const NewsViewPage({Key? key}) : super(key: key);
+  final NewsInfo newsInfo;
+
+  const NewsViewPage({Key? key, required this.newsInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +32,9 @@ class NewsViewPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'News title',
-                style: TextStyle(
+              Text(
+                newsInfo != null ? newsInfo.title! : 'News title',
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Palette.deepBlue,
@@ -43,46 +46,35 @@ class NewsViewPage extends StatelessWidget {
               Container(
                 height: 300,
                 color: Palette.lightGrey,
-                child: Image.network(
-                  'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg',
-                  fit: BoxFit.cover,
-                ),
+                child: newsInfo != null
+                    ? Image.network(
+                        newsInfo.imageUrl!,
+                        fit: BoxFit.cover,
+                      )
+                    : const SizedBox(),
               ),
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                '8/8/2022',
-                style: TextStyle(color: Palette.lightGrey, fontSize: 14),
+              Text(
+                getDateInDDMMYYFormat(newsInfo.dateTime),
+                style: const TextStyle(color: Palette.lightGrey, fontSize: 14),
               ),
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                'Author',
-                style: TextStyle(color: Palette.lightGrey, fontSize: 14),
+              Text(
+                newsInfo.author != null ? newsInfo.author! : 'Author',
+                style: const TextStyle(color: Palette.lightGrey, fontSize: 14),
               ),
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                'Lorem Ipsum is simply dummy text of the printing and '
-                'typesetting industry. Lorem Ipsum has been the industrys '
-                'standard dummy text ever since the 1500s, when an unknown '
-                'printer took a galley of type and scrambled it to make a '
-                'type specimen book. It has survived not only five '
-                'typesetting industry. Lorem Ipsum has been the industrys '
-                'standard dummy text ever since the 1500s, when an unknown '
-                'printer took a galley of type and scrambled it to make a '
-                'type specimen book. It has survived not only five '
-                'centuries, but also the leap into electronic typesetting, '
-                'remaining essentially unchanged. It was popularised in the 1960s'
-                ' with the release of Letraset sheets containing Lorem Ipsum '
-                'passages, and more recently with desktop publishing software '
-                'like Aldus PageMaker including versions of Lorem Ipsum.',
-                style: TextStyle(color: Palette.deepBlue, fontSize: 14),
+              Text(
+                newsInfo.content != null ? newsInfo.content! : 'No content',
+                style: const TextStyle(color: Palette.deepBlue, fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               )
             ],
@@ -91,4 +83,7 @@ class NewsViewPage extends StatelessWidget {
       ),
     );
   }
+
+  String getDateInDDMMYYFormat(DateTime dateTime) =>
+      '${dateTime.day}/${dateTime.month}/${dateTime.year}';
 }

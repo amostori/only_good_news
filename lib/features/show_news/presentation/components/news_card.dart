@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:only_good_news/core/constants/palette.dart';
+import 'package:only_good_news/features/show_news/domain/entities/news_info.dart';
 import 'package:only_good_news/features/show_news/presentation/pages/news_view_page.dart';
 
 class NewsCard extends StatelessWidget {
-  const NewsCard({Key? key}) : super(key: key);
+  final NewsInfo newsInfo;
+
+  const NewsCard({Key? key, required this.newsInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,9 @@ class NewsCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const NewsViewPage(),
+              builder: (context) => NewsViewPage(
+                newsInfo: newsInfo,
+              ),
             ));
       },
       child: Container(
@@ -24,10 +29,12 @@ class NewsCard extends StatelessWidget {
             Container(
               height: 260,
               color: Palette.lightGrey,
-              child: Image.network(
-                'https://cdn.britannica.com/22/187222-050-07B17FB6/apples-on-a-tree-branch.jpg',
-                fit: BoxFit.cover,
-              ),
+              child: newsInfo.imageUrl != null
+                  ? Image.network(
+                      newsInfo.imageUrl!,
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox(),
             ),
             Positioned(
               left: 16,
@@ -43,13 +50,13 @@ class NewsCard extends StatelessWidget {
                     color: Colors.black12,
                   ),
                 ]),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Center(
                     child: Text(
-                      'News Title',
+                      newsInfo.title != null ? newsInfo.title! : 'News Title',
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         fontSize: 18,
                         color: Palette.deepBlue,

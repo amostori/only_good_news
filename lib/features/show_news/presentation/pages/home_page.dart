@@ -79,7 +79,9 @@ class _HomePageState extends State<HomePage> {
                     return ListView.builder(
                       itemCount: state.news.length,
                       itemBuilder: (context, index) {
-                        return const NewsCard();
+                        return NewsCard(
+                          newsInfo: state.news[index],
+                        );
                       },
                     );
                   } else if (state is NewsLoading) {
