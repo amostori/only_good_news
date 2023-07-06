@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:only_good_news/core/constants/palette.dart';
 import 'package:only_good_news/features/show_news/presentation/components/news_card.dart';
 import 'package:only_good_news/features/show_news/presentation/news_cubit/news_cubit.dart';
+import 'package:only_good_news/text_cubit/text_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,13 +39,20 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TextField(
-              style: TextStyle(
+            TextField(
+              onSubmitted: (searchText) {
+                if (searchText.trim() == '') {
+                  context.read<NewsCubit>().fetchNews(null);
+                } else {
+                  context.read<NewsCubit>().fetchNews(searchText);
+                }
+              },
+              style: const TextStyle(
                 fontSize: 14,
                 color: Palette.deepBlue,
               ),
               cursorColor: Palette.deepBlue,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.search,
                     color: Palette.lightGrey,
@@ -63,14 +71,29 @@ class _HomePageState extends State<HomePage> {
                           BorderSide(width: 2, color: Palette.deepBlue))),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Top News',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Palette.deepBlue,
-                fontSize: 20,
-              ),
-            ),
+            BlocBuilder<NewsCubit, NewsState>(builder: (context, state) {
+              if (state is NewsInitial) {
+                return const Text(
+                  'Top News',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Palette.deepBlue,
+                    fontSize: 20,
+                  ),
+                );
+              } else if (state is NewsInitialSearch) {
+                return const Text(
+                  'Searched text',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Palette.deepBlue,
+                    fontSize: 20,
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            }),
             const SizedBox(height: 16),
             Expanded(
               child: BlocBuilder<NewsCubit, NewsState>(
@@ -89,6 +112,15 @@ class _HomePageState extends State<HomePage> {
                       child: CircularProgressIndicator(
                         color: Palette.deepBlue,
                       ),
+                    );
+                  } else if (state is NewsInitialSearch) {
+                    return ListView.builder(
+                      itemCount: state.news.length,
+                      itemBuilder: (context, index) {
+                        return NewsCard(
+                          newsInfo: state.news[index],
+                        );
+                      },
                     );
                   } else {
                     return const Center(child: Text('Error'));
